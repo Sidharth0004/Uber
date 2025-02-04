@@ -43,3 +43,49 @@ Example:
       // ...error details...
     ]
   }
+  ```
+
+## POST /users/login
+
+**Description:**  
+Login an existing user. This endpoint authenticates the user and returns a JSON Web Token along with the user details.
+
+**Request Body:**  
+- `email` (string, required, must be a valid email)
+- `password` (string, required, minimum 6 characters)
+
+Example:
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "secret123"
+}
+```
+
+**Responses:**  
+- **200 OK**  
+  Returns a JSON Web Token and user details.
+  ```json
+  {
+    "token": "JWT token string",
+    "user": {
+      // ...user details...
+    }
+  }
+  ```
+- **400 Bad Request**  
+  Returns a list of validation errors if any required data is missing or invalid.
+  ```json
+  {
+    "errors": [
+      // ...error details...
+    ]
+  }
+  ```
+- **401 Unauthorized**  
+  Returns an error message if the credentials are invalid.
+  ```json
+  {
+    "message": "Invalid email or password"
+  }
+  ```
