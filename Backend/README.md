@@ -89,3 +89,53 @@ Example:
     "message": "Invalid email or password"
   }
   ```
+
+## GET /users/profile
+
+**Description:**  
+Retrieve the profile of the authenticated user.
+
+**Headers:**  
+- `Authorization`: Bearer token (required).
+
+**Responses:**  
+- **200 OK**  
+  Returns the authenticated user's details.
+  ```json
+  {
+    "user": {
+      // ...user details...
+    }
+  }
+  ```
+- **401 Unauthorized**  
+  Returns an error message if the user is not authenticated.
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+## GET /users/logout
+
+**Description:**  
+Logout the authenticated user by clearing the token cookie and invalidating the JWT.
+
+**Headers:**  
+- `Authorization`: Bearer token (required).
+
+**Responses:**  
+- **200 OK**  
+  Returns a success message.
+  ```json
+  {
+    "message": "Logged out successfully"
+  }
+  ```
+- **401 Unauthorized**  
+  Returns an error message if the user is not authenticated.
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
