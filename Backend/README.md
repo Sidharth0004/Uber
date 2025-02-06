@@ -140,13 +140,12 @@ Logout the authenticated user by clearing the token cookie and invalidating the 
   }
   ```
 
+## Captain Routes
 
-
-
-## POST /captains/register
+### POST /captains/register
 
 **Description:**  
-Register a new captain by creating an account using the Captain model. This endpoint creates a captain entry with vehicle details.
+Register a new captain using the Captain model. This endpoint creates a captain entry with vehicle details.
 
 **Request Body:**  
 - `fullname`: Object containing:
@@ -211,5 +210,100 @@ Example:
     "errors": [
       // ...error details...
     ]
+  }
+  ```
+
+### POST /captains/login
+
+**Description:**  
+Login an existing captain. This endpoint authenticates the captain and returns a JSON Web Token along with the captain details.
+
+**Request Body:**  
+- `email` (string, required, must be a valid email)
+- `password` (string, required, minimum 6 characters)
+
+Example:
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "secret123"
+}
+```
+
+**Responses:**  
+- **200 OK**  
+  Returns a JSON Web Token and captain details.
+  ```json
+  {
+    "token": "JWT token string",
+    "captain": {
+      // ...captain details...
+    }
+  }
+  ```
+- **400 Bad Request**  
+  Returns a list of validation errors if any required data is missing or invalid.
+  ```json
+  {
+    "errors": [
+      // ...error details...
+    ]
+  }
+  ```
+- **401 Unauthorized**  
+  Returns an error message if the credentials are invalid.
+  ```json
+  {
+    "message": "Invalid email or password"
+  }
+  ```
+
+### GET /captains/profile
+
+**Description:**  
+Retrieve the profile of the authenticated captain.
+
+**Headers:**  
+- `Authorization`: Bearer token (required).
+
+**Responses:**  
+- **200 OK**  
+  Returns the authenticated captain's details.
+  ```json
+  {
+    "captain": {
+      // ...captain details...
+    }
+  }
+  ```
+- **401 Unauthorized**  
+  Returns an error message if the captain is not authenticated.
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+### GET /captains/logout
+
+**Description:**  
+Logout the authenticated captain by clearing the token cookie and invalidating the JWT.
+
+**Headers:**  
+- `Authorization`: Bearer token (required).
+
+**Responses:**  
+- **200 OK**  
+  Returns a success message.
+  ```json
+  {
+    "message": "Logged out successfully"
+  }
+  ```
+- **401 Unauthorized**  
+  Returns an error message if the captain is not authenticated.
+  ```json
+  {
+    "message": "Unauthorized"
   }
   ```
