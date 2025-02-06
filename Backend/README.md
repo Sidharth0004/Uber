@@ -139,3 +139,77 @@ Logout the authenticated user by clearing the token cookie and invalidating the 
     "message": "Unauthorized"
   }
   ```
+
+
+
+
+## POST /captains/register
+
+**Description:**  
+Register a new captain by creating an account using the Captain model. This endpoint creates a captain entry with vehicle details.
+
+**Request Body:**  
+- `fullname`: Object containing:
+  - `firstname` (string, required, minimum 3 characters)
+  - `lastname` (string, optional, minimum 3 characters)
+- `email` (string, required, valid email)
+- `password` (string, required, minimum 6 characters)
+- `vehicle`: Object containing:
+  - `color` (string, required, minimum 3 characters)
+  - `plate` (string, required, minimum 3 characters)
+  - `capacity` (integer, required, greater than 0)
+  - `vehicleType` (string, required, one of ["car", "bike", "auto"])
+
+Example:
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "secret123",
+  "vehicle": {
+    "color": "red",
+    "plate": "XYZ123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+**Responses:**  
+- **201 Created**  
+  Returns the created captain object and a JSON Web Token.
+  ```json
+  {
+    "captain": {
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "vehicle": {
+        "color": "red",
+        "plate": "XYZ123",
+        "capacity": 4,
+        "vehicleType": "car",
+        "location": {
+          "latitude": 37.7749,
+          "longitude": -122.4194
+        }
+      },
+      "status": "active"
+    },
+    "token": "JWT token string"
+  }
+  ```
+- **400 Bad Request**  
+  Returns a list of validation errors if any required data is missing or invalid.
+  ```json
+  {
+    "errors": [
+      // ...error details...
+    ]
+  }
+  ```
